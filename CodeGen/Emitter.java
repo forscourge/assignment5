@@ -833,19 +833,20 @@ public class Emitter implements Visitor {
 	//emit("; IntLiteral: " + x.Lexeme + "\n");
         //TBD: here you have to emit an ICONST instruction to load the integer literal
         //     onto the JVM stack. (see emitICONST).
+    	emitICONST(x.value);
 
     } 
 
     public void visit(FloatLiteral x) {
 	//emit("; FloatLiteral: " + x.Lexeme + "\n");
        //TBD: same for float
-
+    	emitFCONST(x.value); // ????
     } 
 
     public void visit(BoolLiteral x) {
 	//emit("; BoolLiteral: " + x.Lexeme + "\n");
         //TBD: and bool...
-
+    	emitBCONST(x.value);
     } 
 
     public void visit(StringLiteral x) {
