@@ -804,6 +804,8 @@ public class Emitter implements Visitor {
         if(Op.equals("||")) {
             // complete implement || short circuit evaluation.
             //     Similar to &&, you may use a Java example to figure it out..
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
             x.lAST.accept(this);
             emit(JVM.IFNE + "Label" + L1);
             x.rAST.accept(this);
@@ -955,7 +957,7 @@ public class Emitter implements Visitor {
         //           Label2:
         //
         if(Op.equals("-")){
-        	emit(JFM.INEG);
+        	emit(JVM.INEG);
         }
         else if(Op.equals("!") ){
             int L1 = frame.getNewLabel();
@@ -1040,13 +1042,13 @@ public class Emitter implements Visitor {
     public void visit(FloatLiteral x) {
 	//emit("; FloatLiteral: " + x.Lexeme + "\n");
        //complete same for float
-    	emitFCONST(x.value); // ????
+    	emitFCONST(Float.parseFloat(x.Lexeme));
     } 
 
     public void visit(BoolLiteral x) {
 	//emit("; BoolLiteral: " + x.Lexeme + "\n");
         //complete and bool...
-    	emitBCONST(x.value);
+    	emitBCONST(Boolean.parseBoolean(x.Lexeme));
     } 
 
     public void visit(StringLiteral x) {
