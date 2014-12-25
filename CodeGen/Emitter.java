@@ -516,6 +516,7 @@ public class Emitter implements Visitor {
         //TBD: here you need to allocate a new local variable index to the
         //     formal parameter.
         //     Relevant: x.index, frame.getNewLocalVarIndex();
+    	x.index = frame.getNewLocalVarIndex();
 
     }
 
@@ -555,7 +556,18 @@ public class Emitter implements Visitor {
            //                         emitISTORE()
            //                         emitFSTORE()
            //
-
+           if(D.isGlobal()) {
+               emitStaticVariableReference(V.Ident, typeOfDecl(V.Ident.declAST), true);
+            } else {
+               if(T.Tequal(StdEnvironment.intType)
+                  || T.Tequal(StdEnvironment.boolType)) {
+                  emitISTORE(D.index);
+               } else if (T.Tequal(StdEnvironment.floatType)) {
+                  emitFSTORE(D.index);
+               } else {
+                  assert(false);
+               }
+            } 
         } else {
            assert(false); // Arrays not implemented.
         }
@@ -571,28 +583,54 @@ public class Emitter implements Visitor {
         // Allocate 2 new labes for this if statement.
         int L1 = frame.getNewLabel();
         int L2 = frame.getNewLabel();
-        //TBD: your code goes here...
+        // complete your code goes here...
+    	emit(JVM.IFEQ + "Label" + L1);
+    	
         x.thenAST.accept(this);
-        //TBD: your code goes here...
+        
+        // complete  your code goes here...
+
+    	emit(JVM.GOTO + "Label" + L2);
+    	emitLabel(L1);
         if(x.elseAST != null) {
             x.elseAST.accept(this);
         }
-        //TBD: your code goes here...
-
+        // complete your code goes here...
+    	emitLabel(L2);
+        
     }
 
     public void visit(WhileStmt x) {
 	emit("; WhileStmt, line " + x.pos.StartLine);
         // You should apply the template for while loops from the lecture slides.
-        // TBD:
+        // complete
+	    int L1 = frame.getNewLabel();
+	    int L2 = frame.getNewLabel();
 
+    	emitLabel(L1);
+    	x.eAST.accept(this);
+    	emit(JVM.IFEQ + "Label" + L2);
+    	x.stmtAST.accept(this);
+    	emit(JVM.GOTO + "Label" + L1);
+    	emitLabel(L2);
+    	
     }
 
     public void visit(ForStmt x) {
 	emit ("; ForStmt, line " + x.pos.StartLine);
         // No template was given for "for" loops, but you can find out by compiling a
         // Java "for" loop to bytecode, use "dejasmin" and look how it is done there.
-        // TBD:
+        // complete
+	    int L1 = frame.getNewLabel();
+	    int L2 = frame.getNewLabel();
+		x.e1AST.accept(this);
+		emitLabel(L1);
+		x.e2AST.accept(this);
+    	emit(JVM.IFEQ + "Label" + L2);
+    	x.stmtAST.accept(this);
+    	x.e3AST.accept(this);
+    	emit(JVM.GOTO + "Label" + L1);
+    	emitLabel(L2);
 
     }
 
@@ -679,14 +717,14 @@ public class Emitter implements Visitor {
         // complete your code goes here...
         
         if(D.isGlobal()) {
-            emitStaticVariableReference(x.Ident, typeOfDecl(x.Ident.declAST), true);
+            emitStaticVariableReference(x.Ident, typeOfDecl(x.Ident.declAST), false);
          } 
         else {
             if(T.Tequal(StdEnvironment.intType) || T.Tequal(StdEnvironment.boolType)) {
-               emitISTORE(D.index);
+            	emitILOAD(D.index);
             } 
             else if (T.Tequal(StdEnvironment.floatType)) {
-               emitFSTORE(D.index);
+            	emitFLOAD(D.index);
             } 
             else {
                assert(false);
