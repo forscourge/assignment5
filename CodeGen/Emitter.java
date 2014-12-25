@@ -1035,7 +1035,7 @@ public class Emitter implements Visitor {
 	//emit("; IntLiteral: " + x.Lexeme + "\n");
         //complete here you have to emit an ICONST instruction to load the integer literal
         //     onto the JVM stack. (see emitICONST).
-    	emitFCONST(Int.parseInt(x.Lexeme));
+    	emitICONST(Int.parseInt(x.Lexeme));
 
     } 
 
