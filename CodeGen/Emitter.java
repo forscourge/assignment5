@@ -673,6 +673,7 @@ public class Emitter implements Visitor {
         Decl D = (Decl) x.Ident.declAST;
         Type T = typeOfDecl (D);
         //TBD: your code goes here...
+        
 
     }
 
@@ -730,15 +731,33 @@ public class Emitter implements Visitor {
         if(Op.equals("&&")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            //TBD: implement the code template for && short circuit evaluation
+            // complete implement the code template for && short circuit evaluation
             //     from the lecture slides.
-
+            x.lAST.accept(this);
+            emit(JVM.IFEQ + "Label" + L1);
+            x.rAST.accept(this);
+            emit(JVM.IFEQ + "Label" + L1);
+        	emitBCONST(true);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(false);
+        	emitLabel(L2);
+        	
             return;
         }
         if(Op.equals("||")) {
-            //TBD: implement || short circuit evaluation.
+            // complete implement || short circuit evaluation.
             //     Similar to &&, you may use a Java example to figure it out..
-
+            x.lAST.accept(this);
+            emit(JVM.IFNE + "Label" + L1);
+            x.rAST.accept(this);
+            emit(JVM.IFNE + "Label" + L1);
+        	emitBCONST(false);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(true);
+        	emitLabel(L2);
+        	
             return;
         }
         /*
@@ -748,19 +767,129 @@ public class Emitter implements Visitor {
          */
         x.lAST.accept(this);
         x.rAST.accept(this);
-        //TBD:
+        // complete
 
+        if(Op.equals("+")) {
+            
+            if (x.oAST.type.Tequal(StdEnvironment.intType))
+            	emit(JVM.IADD);
+            if (x.oAST.type.Tequal(StdEnvironment.floatType))
+            	emit(JVM.FADD);
+            
+            return;
+        }
+        
+        if(Op.equals("-")) {
+            
+            if (x.oAST.type.Tequal(StdEnvironment.intType))
+            	emit(JVM.ISUB);
+            if (x.oAST.type.Tequal(StdEnvironment.floatType))
+            	emit(JVM.FSUB);
+            
+            return;
+        }
+        
+        if(Op.equals("*")) {
+            
+            if (x.oAST.type.Tequal(StdEnvironment.intType))
+            	emit(JVM.IMUL);
+            if (x.oAST.type.Tequal(StdEnvironment.floatType))
+            	emit(JVM.FMUL);
+            
+            return;
+        }
+        
+        if(Op.equals("/")) {
+            
+            if (x.oAST.type.Tequal(StdEnvironment.intType))
+            	emit(JVM.IDIV);
+            if (x.oAST.type.Tequal(StdEnvironment.floatType))
+            	emit(JVM.FDIV);
+            
+            return;
+        }
+
+        if(Op.equals("==")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPEQ + "Label" + L1);
+        	emitBCONST(false);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(true);
+        	emitLabel(L2);
+            return;
+        }
+
+        if(Op.equals("!=")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPEQ + "Label" + L1);
+        	emitBCONST(true);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(false);
+        	emitLabel(L2);
+            return;
+        }
+        
+        if(Op.equals(">")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPGT + "Label" + L1);
+        	emitBCONST(false);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(true);
+        	emitLabel(L2);
+            return;
+        }
+
+        if(Op.equals("<=")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPGT + "Label" + L1);
+        	emitBCONST(true);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(false);
+        	emitLabel(L2);
+            return;
+        }
+        
+        if(Op.equals("<")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPLT + "Label" + L1);
+        	emitBCONST(false);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(true);
+        	emitLabel(L2);
+            return;
+        }
+        
+        if(Op.equals(">=")) {
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+            emit(JVM.IF_ICMPLT + "Label" + L1);
+        	emitBCONST(true);
+            emit(JVM.GOTO + "Label" + L2);
+        	emitLabel(L1);
+        	emitBCONST(false);
+        	emitLabel(L2);
+            return;
+        }
     }
 
     public void visit(UnaryExpr x) {
 	//emit("; UnaryExpr");
         String Op = new String(x.oAST.Lexeme);
         x.eAST.accept(this);
-        // Here we treat the following cases:
+        // complete Here we treat the following cases:
         //   unary "-": emit JFM.INEG for integers
         //   unary "+": do nothing
         //   "!": you can use the following code template:
-        //
         //    !E  =>    [[E]]
         //              ifne Label1
         //              iconst_1
@@ -768,7 +897,23 @@ public class Emitter implements Visitor {
         //           Label1:
         //              iconst_0
         //           Label2:
-        //TBD:
+        //
+        Expr E = (Expr) x.eAST;
+        if(Op.equals("-")){
+        	emit(JFM.INEG);
+        }
+        else if(Op.equals("!") ){
+            int L1 = frame.getNewLabel();
+            int L2 = frame.getNewLabel();
+        	emit(JVM.IFNE + "Label" + L1);
+        	emitBCONST(true);
+        	emitLabel(L1);
+        	emitBCONST(false);
+        	emitLabel(L2);
+        }
+        else if(!(Op.equals("+"))){
+            assert(false);
+        }
 
     }
 
@@ -808,10 +953,10 @@ public class Emitter implements Visitor {
 	    emit(JVM.INVOKESTATIC + " lang/System/" +
                  x.idAST.Lexeme + getDescriptor(F));
 	} else {
-        //TBD: in case of an instance method, you need emit an JVM.INVOKEVIRTUAL instruction.
+        // complete in case of an instance method, you need emit an JVM.INVOKEVIRTUAL instruction.
         //     the name of the function consists of <ClassName>/<functionname><functiondescriptor>.
         //      Relevant variables/functions: see above for static methods.
-
+		emit(JVM.INVOKEVIRTUAL + ClassName + "/" + x.idAST.Lexeme + getDescriptor(F));
 	}
     }
 
@@ -831,7 +976,7 @@ public class Emitter implements Visitor {
 
     public void visit(IntLiteral x) {
 	//emit("; IntLiteral: " + x.Lexeme + "\n");
-        //TBD: here you have to emit an ICONST instruction to load the integer literal
+        //complete here you have to emit an ICONST instruction to load the integer literal
         //     onto the JVM stack. (see emitICONST).
     	emitICONST(x.value);
 
@@ -839,13 +984,13 @@ public class Emitter implements Visitor {
 
     public void visit(FloatLiteral x) {
 	//emit("; FloatLiteral: " + x.Lexeme + "\n");
-       //TBD: same for float
+       //complete same for float
     	emitFCONST(x.value); // ????
     } 
 
     public void visit(BoolLiteral x) {
 	//emit("; BoolLiteral: " + x.Lexeme + "\n");
-        //TBD: and bool...
+        //complete and bool...
     	emitBCONST(x.value);
     } 
 
