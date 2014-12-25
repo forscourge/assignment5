@@ -628,13 +628,16 @@ public class Emitter implements Visitor {
         x.tAST.accept(this);
         x.idAST.accept(this);
         x.eAST.accept(this);
-        //TBD: if this variable declaration declares a local variable, then
+        // complete if this variable declaration declares a local variable, then
         //     you have to allocate a new local variable index from "frame"
         //     and assign it to x.index.
         //     Relevant functions:
         //                        isGlobal()
         //                        frame.getNewLocalVarIndex
-        
+        Decl D = (Decl) x;
+        if(!(D.isGlobal())) {
+        	x.index = frame.getNewLocalVarIndex();
+         } 
 
     }
 
