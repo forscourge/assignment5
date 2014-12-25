@@ -968,7 +968,7 @@ public class Emitter implements Visitor {
         	emitBCONST(false);
         	emitLabel(L2);
         }
-        else if ( op.equals("i2f")){
+        else if (Op.equals("i2f")){
         	emit("GVM.I2F");
         }
 
