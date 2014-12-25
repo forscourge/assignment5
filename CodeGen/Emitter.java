@@ -969,7 +969,7 @@ public class Emitter implements Visitor {
         	emitLabel(L2);
         }
         else if ( op.equals("i2f")){
-        	emit("GVM.I2F")
+        	emit("GVM.I2F");
         }
 
     }
