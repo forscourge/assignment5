@@ -968,6 +968,9 @@ public class Emitter implements Visitor {
         	emitBCONST(false);
         	emitLabel(L2);
         }
+        else if ( op.equals("i2f")){
+        	emit("GVM.I2F")
+        }
 
     }
 
@@ -1010,7 +1013,7 @@ public class Emitter implements Visitor {
         // complete in case of an instance method, you need emit an JVM.INVOKEVIRTUAL instruction.
         //     the name of the function consists of <ClassName>/<functionname><functiondescriptor>.
         //      Relevant variables/functions: see above for static methods.
-		emit(JVM.INVOKEVIRTUAL + ClassName + "/" + x.idAST.Lexeme + getDescriptor(F));
+		emit(JVM.INVOKEVIRTUAL + " " + ClassName + "/" + x.idAST.Lexeme + getDescriptor(F));
 	}
     }
 
