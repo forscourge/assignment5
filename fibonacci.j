@@ -26,32 +26,32 @@
    ; IfStmt, line 14
    iload_1
    iconst_0
-   if_icmpeqLabel2
+   if_icmpeq Label2
    iconst_0
-   gotoLabel3
+   goto Label3
   Label2:
    iconst_1
   Label3:
-   ifeqLabel4
+   ifeq Label4
    ; AssignStmt, line 10
    iconst_0
    istore_2
-   gotoLabel5
+   goto Label5
   Label4:
    ; IfStmt, line 14
    iload_1
    iconst_1
-   if_icmpeqLabel6
+   if_icmpeq Label6
    iconst_0
-   gotoLabel7
+   goto Label7
   Label6:
    iconst_1
   Label7:
-   ifeqLabel8
+   ifeq Label8
    ; AssignStmt, line 12
    iconst_1
    istore_2
-   gotoLabel9
+   goto Label9
   Label8:
    ; AssignStmt, line 14
    ; CallExpr
@@ -95,13 +95,13 @@
   Label2:
    iload_2
    bipush 20
-   if_icmpgtLabel4
+   if_icmpgt Label4
    iconst_1
-   gotoLabel5
+   goto Label5
   Label4:
    iconst_0
   Label5:
-   ifeqLabel3
+   ifeq Label3
    ; CallStmt, line 21
    ; CallExpr
    ; ActualParam
@@ -135,7 +135,7 @@
    iconst_1
    iadd
    istore_2
-   gotoLabel2
+   goto Label2
   Label3:
   Label1:
    return

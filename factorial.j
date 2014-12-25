@@ -26,17 +26,17 @@
    ; IfStmt, line 8
    iload_1
    iconst_0
-   if_icmpeqLabel2
+   if_icmpeq Label2
    iconst_0
-   gotoLabel3
+   goto Label3
   Label2:
    iconst_1
   Label3:
-   ifeqLabel4
+   ifeq Label4
    ; AssignStmt, line 6
    iconst_1
    istore_2
-   gotoLabel5
+   goto Label5
   Label4:
    ; AssignStmt, line 8
    iload_1

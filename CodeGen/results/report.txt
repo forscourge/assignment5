@@ -1,5 +1,5 @@
 Codge Generation Test Report
-generated Thu Dec 25 19:31:47 KST 2014
+generated Thu Dec 25 19:43:06 KST 2014
 Assignment succeded
 Coercion failed
 euclid failed
@@ -7,7 +7,7 @@ factorial failed
 fibonacci failed
 FunctionCall failed
 HelloWorld succeded
-If failed
+If succeded
 Intliteral succeded
 Literals succeded
 Shortcircuit failed

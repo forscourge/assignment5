@@ -27,29 +27,29 @@
   Label2:
    iload_2
    iconst_0
-   if_icmpeqLabel4
+   if_icmpeq Label4
    iconst_1
-   gotoLabel5
+   goto Label5
   Label4:
    iconst_0
   Label5:
-   ifeqLabel3
+   ifeq Label3
    ; IfStmt, line 11
    iload_1
    iload_2
-   if_icmpgtLabel6
+   if_icmpgt Label6
    iconst_0
-   gotoLabel7
+   goto Label7
   Label6:
    iconst_1
   Label7:
-   ifeqLabel8
+   ifeq Label8
    ; AssignStmt, line 8
    iload_1
    iload_2
    isub
    istore_1
-   gotoLabel9
+   goto Label9
   Label8:
    ; AssignStmt, line 10
    iload_2
@@ -57,7 +57,7 @@
    isub
    istore_2
   Label9:
-   gotoLabel2
+   goto Label2
   Label3:
    ; ReturnStmt, line 13
    iload_1

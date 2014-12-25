@@ -1,0 +1,4 @@
+--- ./CodeGen/tst/base/solutions/Coercion.txt	2014-12-23 22:38:19.737176079 +0900
++++ ./CodeGen/results/res_Coercion	2014-12-25 19:43:07.678949231 +0900
+@@ -1 +0,0 @@
+-1.0
