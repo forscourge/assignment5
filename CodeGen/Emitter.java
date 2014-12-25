@@ -956,10 +956,10 @@ public class Emitter implements Visitor {
         //              iconst_0
         //           Label2:
         //
-        if(Op.equals("-"))
+        if(Op.equals("-")){
         	emit(JVM.INEG);
         }
-        else if(Op.equals("!") ){
+        else if( Op.equals("!")){
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
         	emit(JVM.IFNE + " Label" + L1);
