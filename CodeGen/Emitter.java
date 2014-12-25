@@ -627,13 +627,14 @@ public class Emitter implements Visitor {
     public void visit(VarDecl x) {
         x.tAST.accept(this);
         x.idAST.accept(this);
-	x.eAST.accept(this);
+        x.eAST.accept(this);
         //TBD: if this variable declaration declares a local variable, then
         //     you have to allocate a new local variable index from "frame"
         //     and assign it to x.index.
         //     Relevant functions:
         //                        isGlobal()
         //                        frame.getNewLocalVarIndex
+        
 
     }
 
@@ -672,8 +673,22 @@ public class Emitter implements Visitor {
         //                         emitILOAD(), emitFLOAD
         Decl D = (Decl) x.Ident.declAST;
         Type T = typeOfDecl (D);
-        //TBD: your code goes here...
+        // complete your code goes here...
         
+        if(D.isGlobal()) {
+            emitStaticVariableReference(x.Ident, typeOfDecl(x.Ident.declAST), true);
+         } 
+        else {
+            if(T.Tequal(StdEnvironment.intType) || T.Tequal(StdEnvironment.boolType)) {
+               emitISTORE(D.index);
+            } 
+            else if (T.Tequal(StdEnvironment.floatType)) {
+               emitFSTORE(D.index);
+            } 
+            else {
+               assert(false);
+            }
+         } 
 
     }
 
@@ -898,7 +913,6 @@ public class Emitter implements Visitor {
         //              iconst_0
         //           Label2:
         //
-        Expr E = (Expr) x.eAST;
         if(Op.equals("-")){
         	emit(JFM.INEG);
         }
