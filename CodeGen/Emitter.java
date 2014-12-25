@@ -584,13 +584,13 @@ public class Emitter implements Visitor {
         int L1 = frame.getNewLabel();
         int L2 = frame.getNewLabel();
         // complete your code goes here...
-    	emit(JVM.IFEQ + "Label" + L1);
+    	emit(JVM.IFEQ + " Label" + L1);
     	
         x.thenAST.accept(this);
         
         // complete  your code goes here...
 
-    	emit(JVM.GOTO + "Label" + L2);
+    	emit(JVM.GOTO + " Label" + L2);
     	emitLabel(L1);
         if(x.elseAST != null) {
             x.elseAST.accept(this);
@@ -609,9 +609,9 @@ public class Emitter implements Visitor {
 
     	emitLabel(L1);
     	x.eAST.accept(this);
-    	emit(JVM.IFEQ + "Label" + L2);
+    	emit(JVM.IFEQ + " Label" + L2);
     	x.stmtAST.accept(this);
-    	emit(JVM.GOTO + "Label" + L1);
+    	emit(JVM.GOTO + " Label" + L1);
     	emitLabel(L2);
     	
     }
@@ -626,10 +626,10 @@ public class Emitter implements Visitor {
 		x.e1AST.accept(this);
 		emitLabel(L1);
 		x.e2AST.accept(this);
-    	emit(JVM.IFEQ + "Label" + L2);
+    	emit(JVM.IFEQ + " Label" + L2);
     	x.stmtAST.accept(this);
     	x.e3AST.accept(this);
-    	emit(JVM.GOTO + "Label" + L1);
+    	emit(JVM.GOTO + " Label" + L1);
     	emitLabel(L2);
 
     }
@@ -790,11 +790,11 @@ public class Emitter implements Visitor {
             // complete implement the code template for && short circuit evaluation
             //     from the lecture slides.
             x.lAST.accept(this);
-            emit(JVM.IFEQ + "Label" + L1);
+            emit(JVM.IFEQ + " Label" + L1);
             x.rAST.accept(this);
-            emit(JVM.IFEQ + "Label" + L1);
+            emit(JVM.IFEQ + " Label" + L1);
         	emitBCONST(true);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(false);
         	emitLabel(L2);
@@ -807,11 +807,11 @@ public class Emitter implements Visitor {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
             x.lAST.accept(this);
-            emit(JVM.IFNE + "Label" + L1);
+            emit(JVM.IFNE + " Label" + L1);
             x.rAST.accept(this);
-            emit(JVM.IFNE + "Label" + L1);
+            emit(JVM.IFNE + " Label" + L1);
         	emitBCONST(false);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(true);
         	emitLabel(L2);
@@ -870,9 +870,9 @@ public class Emitter implements Visitor {
         if(Op.equals("==")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPEQ + "Label" + L1);
+            emit(JVM.IF_ICMPEQ + " Label" + L1);
         	emitBCONST(false);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(true);
         	emitLabel(L2);
@@ -882,9 +882,9 @@ public class Emitter implements Visitor {
         if(Op.equals("!=")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPEQ + "Label" + L1);
+            emit(JVM.IF_ICMPEQ + " Label" + L1);
         	emitBCONST(true);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(false);
         	emitLabel(L2);
@@ -894,9 +894,9 @@ public class Emitter implements Visitor {
         if(Op.equals(">")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPGT + "Label" + L1);
+            emit(JVM.IF_ICMPGT + " Label" + L1);
         	emitBCONST(false);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(true);
         	emitLabel(L2);
@@ -906,9 +906,9 @@ public class Emitter implements Visitor {
         if(Op.equals("<=")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPGT + "Label" + L1);
+            emit(JVM.IF_ICMPGT + " Label" + L1);
         	emitBCONST(true);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(false);
         	emitLabel(L2);
@@ -918,9 +918,9 @@ public class Emitter implements Visitor {
         if(Op.equals("<")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPLT + "Label" + L1);
+            emit(JVM.IF_ICMPLT + " Label" + L1);
         	emitBCONST(false);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(true);
         	emitLabel(L2);
@@ -930,9 +930,9 @@ public class Emitter implements Visitor {
         if(Op.equals(">=")) {
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-            emit(JVM.IF_ICMPLT + "Label" + L1);
+            emit(JVM.IF_ICMPLT + " Label" + L1);
         	emitBCONST(true);
-            emit(JVM.GOTO + "Label" + L2);
+            emit(JVM.GOTO + " Label" + L2);
         	emitLabel(L1);
         	emitBCONST(false);
         	emitLabel(L2);
@@ -956,20 +956,17 @@ public class Emitter implements Visitor {
         //              iconst_0
         //           Label2:
         //
-        if(Op.equals("-")){
+        if(Op.equals("-"))
         	emit(JVM.INEG);
         }
         else if(Op.equals("!") ){
             int L1 = frame.getNewLabel();
             int L2 = frame.getNewLabel();
-        	emit(JVM.IFNE + "Label" + L1);
+        	emit(JVM.IFNE + " Label" + L1);
         	emitBCONST(true);
         	emitLabel(L1);
         	emitBCONST(false);
         	emitLabel(L2);
-        }
-        else if(!(Op.equals("+"))){
-            assert(false);
         }
 
     }
